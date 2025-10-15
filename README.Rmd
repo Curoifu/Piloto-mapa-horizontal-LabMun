@@ -1,0 +1,82 @@
+
+---
+title: "Mapa Horizontal de Comunas con Proyectos del CIT"
+author: "Laboratorio Municipal CIT"
+date: "15 de October de 2025"
+output:
+  github_document:
+    toc: true
+    toc_depth: 2
+    html_preview: true
+---
+
+## Introducción
+
+Este repositorio presenta una visualización interactiva del territorio comunal de Chile, desarrollada por el Laboratorio Municipal del CIT. El objetivo es ofrecer una perspectiva horizontal del país, destacando las comunas que han sido parte de proyectos impulsados por el CIT.
+
+El mapa permite explorar de manera intuitiva la distribución territorial de los proyectos, facilitando el análisis espacial y la comunicación pública de las iniciativas.
+
+## Descripción del proceso
+
+### 1. Carga de datos
+
+Se utilizan dos fuentes principales:
+
+- Un archivo Excel con la tabla de proyectos del CIT, que incluye nombre, duración, año y comuna.
+- Un shapefile simplificado con los límites comunales de Chile.
+
+La unión entre ambas se realiza mediante el campo `CUT_COM`, que corresponde al código único de cada comuna según el INE. Esta elección garantiza una vinculación robusta, evitando errores por diferencias ortográficas en los nombres.
+
+### 2. Rotación del territorio
+
+Para facilitar la lectura horizontal del país, se aplica una rotación de 270° a las geometrías comunales. Esta transformación se realiza únicamente sobre el continente, preservando las islas sin alteración para evitar deformaciones.
+
+### 3. Simplificación geométrica
+
+Se aplica una simplificación condicional:
+
+- Comunas con superficie mayor al umbral mediano se simplifican con tolerancia estándar.
+- Comunas pequeñas (como islas) se simplifican con tolerancia reducida para conservar su forma.
+
+Esto mejora el rendimiento del mapa sin sacrificar la legibilidad espacial.
+
+### 4. Generación de popups
+
+Para cada comuna con proyectos, se genera un texto enriquecido que incluye:
+
+- Nombre de la comuna
+- Listado de proyectos con año y duración
+
+Las comunas sin proyectos muestran solo su nombre y región.
+
+### 5. Asignación de color
+
+- Comunas con proyectos se destacan en azul institucional del CIT (`#0674A5`).
+- Comunas sin proyectos se muestran en gris claro (`#cccccc`).
+
+### 6. Visualización interactiva
+
+Se utiliza `plotly` y `crosstalk` para generar un mapa interactivo, con trazos vectoriales y popups al pasar el cursor. El diseño es responsivo y se adapta a distintos tamaños de pantalla.
+
+## Qué se presenta en el mapa
+
+El mapa muestra todas las comunas de Chile en una disposición horizontal. Cada comuna está representada por su forma geográfica simplificada. Al pasar el cursor sobre una comuna, se despliega un popup con información relevante:
+
+- Si la comuna tiene proyectos del CIT, se listan todos los proyectos con sus detalles.
+- Si no tiene proyectos, se muestra solo el nombre y la región.
+
+Este recurso permite visualizar de forma clara y atractiva la cobertura territorial del CIT, identificar zonas con mayor actividad, y facilitar la toma de decisiones estratégicas.
+
+## Despliegue en GitHub Pages
+
+El archivo HTML generado se guarda en la carpeta `docs/` como `index.html`. Para publicar el mapa:
+
+1. Subir el repositorio a GitHub.
+2. Ir a la configuración del repositorio.
+3. Activar GitHub Pages desde la rama `main`, carpeta `/docs`.
+4. El mapa estará disponible públicamente en la URL generada por GitHub.
+
+## Créditos
+
+Este desarrollo fue realizado por el equipo del Laboratorio Municipal del CIT, con el objetivo de fortalecer la visualización territorial de las políticas públicas locales.
+
